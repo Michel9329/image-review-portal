@@ -1,0 +1,29 @@
+{
+  "name": "image-review-portal",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A small Cloudflare Worker + D1 + R2 portal where reviewers pin comments on images, compare versions and approve them with N signatures.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "wrangler dev --persist-to .wrangler/state",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:init:local": "wrangler d1 execute image-review-portal --local --persist-to .wrangler/state --file=./schema.sql",
+    "db:init": "wrangler d1 execute image-review-portal --remote --file=./schema.sql"
+  },
+  "dependencies": {
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0",
+    "wrangler": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

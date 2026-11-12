@@ -1,0 +1,62 @@
+{
+  // Copy this file as-is. Nothing below is a real account, domain or resource id.
+  "name": "image-review-portal",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-05-01",
+  // Serve on <name>.<account>.workers.dev; no preview URLs for every version.
+  "workers_dev": true,
+  "preview_urls": false,
+  "compatibility_flags": ["nodejs_compat"],
+
+  // The front end is served as static assets, but the Worker sees every request first, so that
+  // /api/* and the image files go through the session check.
+  "assets": {
+    "directory": "public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+
+  // 1. Create it:  npx wrangler d1 create image-review-portal
+  // 2. Paste the database_id it prints in place of the placeholder below.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "image-review-portal",
+      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+    }
+  ],
+
+  // Private bucket. Create it:  npx wrangler r2 bucket create image-review-portal-media
+  // Do not enable a public r2.dev domain: every file must pass through the Worker.
+  "r2_buckets": [
+    { "binding": "MEDIA", "bucket_name": "image-review-portal-media" }
+  ],
+
+  // Create it:  npx wrangler kv namespace create RATE_LIMIT   (paste the id it prints)
+  "kv_namespaces": [
+    { "binding": "RATE_LIMIT", "id": "REPLACE_WITH_YOUR_KV_NAMESPACE_ID" }
+  ],
+
+  // Once a day: delete old login codes.
+  "triggers": { "crons": ["17 3 * * *"] },
+
+  "vars": {
+    // Comma separated. These people can create projects and invite members.
+    "ADMIN_EMAILS": "admin@example.com",
+    // The public address of the app, used in sign-in links. Leave empty to use the request origin.
+    "APP_URL": "",
+    "APP_NAME": "Image Review Portal",
+    // Sender on a domain you verified in Resend. Only used if RESEND_API_KEY is set.
+    "MAIL_FROM": "Image Review Portal <noreply@example.com>",
+    // Upload limit in bytes (10 MB).
+    "MAX_UPLOAD_BYTES": "10485760"
+  }
+
+  // Secrets are not stored here. Set them with:
+  //   npx wrangler secret put SESSION_SECRET    (random, at least 32 characters)
+  //   npx wrangler secret put RESEND_API_KEY    (optional; without it no sign-in code is sent. For local tests set DEV_MODE=1 in .dev.vars to print codes)
+  // For local development copy .dev.vars.example to .dev.vars.
+
+  // Optional: your own domain.
+  // "routes": [{ "pattern": "review.example.com", "custom_domain": true }]
+}
