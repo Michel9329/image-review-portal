@@ -1,0 +1,9 @@
+# Copy to .dev.vars for `wrangler dev`. .dev.vars is in .gitignore: never commit it.
+
+# Random string, at least 32 characters. Generate one with:  node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+SESSION_SECRET=change-me-to-a-long-random-string-of-32-or-more-characters
+
+# Optional. Without it, sign-in codes are printed in the terminal running `wrangler dev`.
+# RESEND_API_KEY=
+# Local only: print sign-in codes in the wrangler dev terminal when no mail is sent. Never set in production.
+DEV_MODE=1
