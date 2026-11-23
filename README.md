@@ -8,6 +8,12 @@ It runs on Cloudflare: one Worker, one D1 database, one private R2 bucket, one K
 
 Built with Claude Code, designed and reviewed by Michel Dimitri.
 
+![A project page with four images and their approval status](docs/screenshot-project.png)
+
+![An image page with a pinned comment, its thread and the signatures](docs/screenshot-image.png)
+
+*Both screenshots show sample data.*
+
 ## Who it is for
 
 Anyone who has to get images approved by a client or a business partner and is tired of corrections arriving by chat: designers, photographers, agencies, small studios. You upload, they point at the exact spot that needs a change and write why, you upload a new version, and they sign the one they have seen.
